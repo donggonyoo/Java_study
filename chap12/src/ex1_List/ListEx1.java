@@ -21,9 +21,6 @@ import java.util.List;
  * 			객체 중복저장 불가능
  * 		구현클래스 : HashSet , TreeSet , LinkedHashSet
  * 
- * 
- * 
- * 
  */
 public class ListEx1 {
 	public static void main(String[] args) {
@@ -41,16 +38,17 @@ public class ListEx1 {
 		//인덱스로 값 찾기
 		for (int i = 0; i < list.size(); i++) {
 			System.out.println
-			(i+" : "+list.get(i));
+			(i+" : "+list.get(i));//i번 인덱스값 추출
 		}
 		
 		//정렬하기
 		//Collection : 인터페이스
 		//Collections : 클래스( Collection 객체의  기능 보조)
-		Collections.sort(list);
+		Collections.sort(list);//리스트를 오름차순으로 정렬
 		System.out.println("sort "+list);
 		
 		Collections.sort(list,Collections.reverseOrder());//내림차순
+//		System.out.println(list.reversed());이미 오름차순정리가 돼 있으므로 reversed하면 내림차순
 		System.out.println("reverseOrder : "+list);
 		
 		Collections.shuffle(list);//섞기

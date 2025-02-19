@@ -32,6 +32,48 @@ Collections.max(list)와 Collections.min(list) 함수를 이용한다
  */
 public class Test2_A {
 	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("여러개의 자연수를 입력하세요 : (0입력시종료)");
+		ArrayList<Integer> list = new ArrayList<>();
+		int sum=0;
+
+		while(true) {
+			try {
+				int n = scan.nextInt();//이래야 문자를입력해도 오류가안나지
+				if(n==0) {break;}
+				else {
+					if(n%2 !=0) {
+						list.add(n);
+						sum+=n;
+					}
+				}
+			} catch (InputMismatchException e) {
+				scan.next();
+				//만약 nextInt인데 문자값을 넣었다면
+				//예외를 잡은 후 그 문자만 없애주고 다시 while문 시작
+				//즉 문자를 입력하면 아무일도일어나지않은듯 루프가 돌아감
+			}
+		}
 		
+		
+		System.out.println(list+"의 합 : "+sum);
+		Integer max = Collections.max(list);
+		Integer min = Collections.min(list);
+		System.out.println("홀수의 최대값 : "+max);
+		System.out.println("홀수의 최소값 : "+min);
+		System.out.println("홀수의 최대값 위치 : "+list.indexOf(max));
+		System.out.println("홀수의 최소값 위치 : "+list.indexOf(min));
+		//Integer(객체)를 get에 넣으면 값의 위치를 반환해줌 
+		//int를 넣을시 해당인덱스를 얘기함
+		System.out.println("입력된 홀수 목록 : "+list);
+		Collections.sort(list);
+		double mid = 0;
+		if(list.size()%2==0) {
+			mid = (double)(list.get(list.size()/2)+list.get(list.size()/2-1))/2;
+			System.out.println("중간값 : "+mid);
+		}
+		else {
+			System.out.println(list.get(list.size()/2));
+		}
 	}
 }
