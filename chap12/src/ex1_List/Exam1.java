@@ -1,6 +1,7 @@
 package ex1_List;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 /*
@@ -27,20 +28,22 @@ public class Exam1 {
 		for (Integer i : list) {
 			sum+=i;
 		}
-		avg = sum/list.size();
+		avg = (double)sum/list.size();
 		
+		Collections.sort(list);//정렬
 		double mid = 0;
 		if(list.size()%2==0) {
-			mid = list.get(list.size()/2)+ list.get(list.size()/2-1);
-			mid = mid/2;
+			mid = (list.get(list.size()/2)+ list.get(list.size()/2-1))/2;
+			
 		}
 		
 		else {
 			mid = list.get(list.size()/2);
 		}
-		System.out.println("입력 수 :"+list);
+		System.out.println("입력  :"+list);
+		System.out.println("사이즈  :"+list.size());
 		System.out.println("sum : "+sum);
-		System.out.println("avg : "+avg);
+		System.out.printf("avg : %.3f  \n",avg);
 		System.out.println("중간값 : "+mid);
 
 	}
