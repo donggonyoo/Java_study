@@ -35,58 +35,7 @@ import java.util.Random;
  */
 public class Test3 {
 	public static void main(String[] args) {
-		//		int ran = new Random().nextInt(1000)+1;//1~1000
-		LinkedHashSet<Integer> set = new LinkedHashSet<>();
-		for (int i = 1; i < 1000; i++) {
-			set.add(i);
-		}
-		ArrayList<Integer> list = new ArrayList<>(set);
-		ArrayList<Integer> a3 = new ArrayList<>();
-		ArrayList<Integer> a2 = new ArrayList<>();
-		ArrayList<Integer> a1 = new ArrayList<>();
-		Collections.shuffle(list);
-
-		System.out.println("  [결과]  ");
-		System.out.println("3등복권 추첨!");
-		for (int i = 0; i < 3; i++) {
-			a3.add(list.get(i));
-			System.out.print(list.get(i)+",");
-		} System.out.println();
-
-		System.out.println("2등복권 추첨!");
-		for (int i = 3; i < 5; i++) {
-			a2.add(list.get(i));
-			System.out.print(list.get(i)+",");	
-		} System.out.println();
-
-		System.out.println("1등복권 추첨!");
-		System.out.println(list.get(5));
-		a1.add(list.get(5));
-
-		System.out.println("********");
-		
-		for (Integer i : a1) {
-			System.out.println("1등 : "+i);
-		}
-		
-		System.out.print("2등 : ");
-		for (Integer i : a2) {
-			System.out.print(i+" ");
-		}System.out.println();
-		
-		System.out.printf("3등 : ");
-		for (Integer i : a3) {
-			System.out.print(i+" ");
-		}System.out.println();
-		
-		System.out.println("===========");
-
-		System.out.println("1등 : "+a1);
-		System.out.println("2등 : "+a2);
-		System.out.println("3등 : "+a3);
-
-
-
 	}
-
 }
+
+
