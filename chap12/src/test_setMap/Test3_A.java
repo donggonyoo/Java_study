@@ -111,7 +111,8 @@ public class Test3_A {
 				if(book.title.equals(next)){
 					System.out.println(book);
 				}
-				else {System.out.println("없어요");}
+				else {System.out.println("없어요");
+				break;}
 			}
 			//			for(Book book : bookset) {
 			//				if(book.title.equals(next)){
@@ -126,7 +127,7 @@ public class Test3_A {
 				if(book.author.equals(next)){
 					System.out.println(book);
 				}
-				else {System.out.println("없어요");}
+				else {System.out.println("없어요");break;}
 			}
 		}
 		case 3->{
@@ -136,7 +137,7 @@ public class Test3_A {
 				if(book.price==price){
 					System.out.println(book);
 				}
-				else {System.out.println("없어요");}
+				else {System.out.println("없어요");break;}
 			}
 		}
 		default->{
