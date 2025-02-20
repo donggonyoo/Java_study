@@ -56,6 +56,7 @@ class Book implements Comparable<Book>{
 	public int compareTo(Book o) {
 		return title.compareTo(o.title);
 	}
+	
 
 
 }
@@ -70,6 +71,7 @@ public class Test3_A {
 		books.put("안녕", new Book("안녕", "하이", 10000));
 		books.put("채식주의자", new Book("채식주의자", "한강", 5000));
 		books.put("가나다", new Book("가나다", "당근", 8000));
+		books.put("유동곤", new Book("유동곤", "당근", 8000));
 		books.put("마라", new Book("마라", "수박", 2000));
 		//확인용
 
@@ -100,77 +102,104 @@ public class Test3_A {
 		Scanner scan = new Scanner(System.in);
 		System.out.println("책 검색 시작");
 		List<Book> bookList = new ArrayList<>(books.values());
-		Set<Book> bookset = new HashSet<>(books.values());
+		//		Set<Book> bookset = new HashSet<>(books.values());
 		System.out.println("검색기준 입력 : 1(제목) 2(저자) 3(가격) (아무거나입력시 제목!)");
-		int num = scan.nextInt();
-		switch(num) {
-		case 1->{
-			System.out.print("제목을 입력하세요");
-			String next = scan.next();
-			for (Book book : bookList) {
-				if(book.title.equals(next)){
-					System.out.println(book);
-				}
-				else {System.out.println("없어요");
-				break;}
+		
+		try {
+			int num = scan.nextInt();
+			switch(num) {
+			case 1->{
+				System.out.print("제목을 입력하세요");
+				String next = scan.next();
+				Book book2 = null;
+				for (Book book : bookList) {
+					if(book.title.equals(next)){
+						System.out.println(book2);
+						return;//return으로 현재메서드를 종료하고 호출한곳으로 가게 됨 (104번째줄)
+						//map의 key값은 중복될수없으니 제목은 중복되는게 없을거다
+					}
+				}System.out.println(next+"는 없는 제목");
+				//			for(Book book : bookset) {
+				//				if(book.title.equals(next)){
+				//					System.out.println(book);
+				//						return;
+				//				} 검색은 Set도 가능한 것을 확인
+				//			}
 			}
-			//			for(Book book : bookset) {
-			//				if(book.title.equals(next)){
-			//					System.out.println(book);
-			//				} 검색은 Set도 가능한 것을 확인
-			//			}
-		}
-		case 2->{
-			System.out.print("저자를 입력하세요");
-			String next = scan.next();
-			for (Book book : bookList) {
-				if(book.author.equals(next)){
-					System.out.println(book);
+
+			case 2->{
+				System.out.print("저자를 입력하세요");
+				String next = scan.next();
+				ArrayList<Book> bookList2 = new ArrayList<Book>();
+				for (Book book : bookList) {
+					if(book.author.equals(next)){
+						bookList2.add(book);
+					}
 				}
-				else {System.out.println("없어요");break;}
+				if(bookList2.size()==0) {
+					System.out.println(next+"는 존재하지않는 저자");
+				}
+				else {
+					System.out.println(bookList2);
+				}
+
+			}
+			case 3->{
+				System.out.print("가격을 입력하세요");
+				int price = scan.nextInt();
+				ArrayList<Book> bookList2 = new ArrayList<Book>();
+				for (Book book : bookList) {
+					if(book.price==price){
+						bookList2.add(book);
+					}
+				}
+				if(bookList2.size()==0) {
+					System.out.println(price+"는 존재하지않는 가격");
+				}
+				else {
+					System.out.println(bookList2);
+				}
+			}
+
+			default->{
+				System.out.print("제목을 입력하세요");
+				String next = scan.next();
+				for (Book book : bookList) {
+					if(book.title.equals(next)){
+						System.out.println(book);
+						return;
+					}
+				}System.out.println(next+"존재하지않는 제목");
+			}
 			}
 		}
-		case 3->{
-			System.out.print("가격을 입력하세요");
-			int price = scan.nextInt();
-			for (Book book : bookList) {
-				if(book.price==price){
-					System.out.println(book);
-				}
-				else {System.out.println("없어요");break;}
-			}
-		}
-		default->{
-			System.out.print("제목을 입력하세요");
-			String next = scan.next();
-			for (Book book : bookList) {
-				if(book.title.equals(next)){
-					System.out.println(book);
-				}
-			}
-		}
+		catch(InputMismatchException e) {
+			System.out.println("숫자만 입력");
+			scan.next(); 
+			return;
 		}
 	}
 	private static void printBook() {
 		Scanner scan = new Scanner(System.in);
 		System.out.println("도서목록 조회");
 		System.out.println("조회방식을 입력하세요 1제목 2저자 3가격(아무거나입력시 제목 순)");
-		int print = scan.nextInt();
-		List<Book> bookList = new ArrayList<>(books.values());
-		switch(print) {
-
-		case 1->Collections.sort(bookList);//객체에 제목으로 compare을 오버라이딩해놨음
-
-		case 2->{Collections.sort(bookList,//저자로 정렬(compareTo활용)
+		try {
+			int print = scan.nextInt();
+			List<Book> bookList = new ArrayList<>(books.values());
+			switch(print) {
+			case 1->Collections.sort(bookList);//객체에 제목으로 compare을 오버라이딩해놨음
+			case 2->{Collections.sort(bookList,//저자로 정렬(compareTo활용)
 				(s1,s2)->s1.author.compareTo(s2.author));}
-
-		case 3->{Collections.sort(bookList,
+			case 3->{Collections.sort(bookList,
 				(s1,s2)->s1.price-s2.price);}//가격으로 정렬
-
-		default ->Collections.sort(bookList);
-
+			default ->Collections.sort(bookList);
+			}
+			System.out.println(bookList);
 		}
-		System.out.println(bookList);
+		catch(InputMismatchException e) {
+			System.out.println("숫자만 입력 ");
+			scan.next();
+		}
 
 
 	}

@@ -46,6 +46,7 @@ public class Exam2 {
 		Collections.sort(list.reversed());
 //		Collections.sort(list,Comparator.reverseOrder()); 위에랑 같은 의미	
 		System.out.println(list);
+		System.out.println("한글이름으로 내림차순 정렬2");
 		Comparator<Name> f1 = (e1,e2)->{
 			return e1.kor.compareTo(e2.kor)*-1;
 			};

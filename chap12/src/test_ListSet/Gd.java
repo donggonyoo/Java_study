@@ -19,7 +19,8 @@ public class Gd {
 		Collections.sort(a);
 		System.out.println(a);
 		System.out.println("내림차순 정렬 후");
-		Collections.sort(a,Comparator.reverseOrder());
+//		Collections.sort(a,Comparator.reverseOrder());
+		Collections.sort(a.reversed());
 		System.out.println(a);
 		
 		

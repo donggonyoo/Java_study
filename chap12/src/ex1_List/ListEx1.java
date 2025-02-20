@@ -48,7 +48,7 @@ public class ListEx1 {
 		System.out.println("sort "+list);
 		
 		Collections.sort(list,Collections.reverseOrder());//내림차순
-//		System.out.println(list.reversed());이미 오름차순정리가 돼 있으므로 reversed하면 내림차순
+//		Collections.sort(list.reversed()); 같은의미
 		System.out.println("reverseOrder : "+list);
 		
 		Collections.shuffle(list);//섞기
