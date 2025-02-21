@@ -107,6 +107,7 @@ public class Test3_A {
 		
 		try {
 			int num = scan.nextInt();
+			ArrayList<Book> bookList2 = new ArrayList<Book>();
 			switch(num) {
 			case 1->{
 				System.out.print("제목을 입력하세요");
@@ -114,11 +115,11 @@ public class Test3_A {
 				Book book2 = null;
 				for (Book book : bookList) {
 					if(book.title.equals(next)){
-						System.out.println(book2);
+						System.out.println(book);
 						return;//return으로 현재메서드를 종료하고 호출한곳으로 가게 됨 (104번째줄)
 						//map의 key값은 중복될수없으니 제목은 중복되는게 없을거다
 					}
-				}System.out.println(next+"는 없는 제목");
+				}
 				//			for(Book book : bookset) {
 				//				if(book.title.equals(next)){
 				//					System.out.println(book);
@@ -126,51 +127,37 @@ public class Test3_A {
 				//				} 검색은 Set도 가능한 것을 확인
 				//			}
 			}
-
 			case 2->{
 				System.out.print("저자를 입력하세요");
 				String next = scan.next();
-				ArrayList<Book> bookList2 = new ArrayList<Book>();
+			
 				for (Book book : bookList) {
 					if(book.author.equals(next)){
 						bookList2.add(book);
+						}
 					}
 				}
-				if(bookList2.size()==0) {
-					System.out.println(next+"는 존재하지않는 저자");
-				}
-				else {
-					System.out.println(bookList2);
-				}
-
-			}
 			case 3->{
 				System.out.print("가격을 입력하세요");
 				int price = scan.nextInt();
-				ArrayList<Book> bookList2 = new ArrayList<Book>();
 				for (Book book : bookList) {
 					if(book.price==price){
 						bookList2.add(book);
 					}
 				}
-				if(bookList2.size()==0) {
-					System.out.println(price+"는 존재하지않는 가격");
-				}
-				else {
-					System.out.println(bookList2);
-				}
 			}
 
 			default->{
-				System.out.print("제목을 입력하세요");
-				String next = scan.next();
-				for (Book book : bookList) {
-					if(book.title.equals(next)){
-						System.out.println(book);
-						return;
+				System.out.println("잘못된 입력 ");
+				return;
 					}
-				}System.out.println(next+"존재하지않는 제목");
-			}
+				}
+			//swich문 종료 후
+			if(bookList2.size()==0) {
+				System.out.println("존재하지않는 도서");
+				}
+			else {
+				System.out.println(bookList2);
 			}
 		}
 		catch(InputMismatchException e) {
@@ -194,7 +181,9 @@ public class Test3_A {
 				(s1,s2)->s1.price-s2.price);}//가격으로 정렬
 			default ->Collections.sort(bookList);
 			}
-			System.out.println(bookList);
+			for (Book book : bookList) {
+				System.out.println(book);
+			}
 		}
 		catch(InputMismatchException e) {
 			System.out.println("숫자만 입력 ");
