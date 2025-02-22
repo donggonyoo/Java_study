@@ -14,7 +14,7 @@ import java.io.IOException;
  */
 public class Exam1 {
 	public static void main(String[] args) throws IOException {
-		System.out.println("out.txt 파일에 내용이 저장됩니다.");
+		System.out.println("out2.txt 파일에 내용이 저장됩니다.");
 		FileWriter fos = new FileWriter("out2.txt",true);
 		//fos: out2.txt 파일에 내용을 저장 할 수 있는 출력스트림
 		

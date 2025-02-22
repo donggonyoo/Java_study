@@ -33,11 +33,13 @@ public class FileOutputStreamEx1 {
 		 */
 		fos.write('1');fos.write('2');fos.write('3');
 		fos.write('a');fos.write('b');fos.write('c');
-		fos.write('가');fos.write('나');fos.write('다');
+//		fos.write('가');fos.write('나');fos.write('다');
 		//String.getBytes() : 문자열을 byte[]로 리턴		
 		byte[] buf = "\nFileOutputStream 예제입니다.\n".getBytes();
 		fos.write(buf); //buf의 내용을 out.txt파일에 출력
 		fos.write(buf,5,6); //buf의 내용 중 5번인덱스부터 6개의 바이트를 출력
 		fos.flush();
+		fos.close();
+		
 	}
 }

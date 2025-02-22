@@ -18,9 +18,27 @@ CA FE BA BE 00 00 00 34 00 8E 07 00 02 01 00 17
 6F 64 65 0A 00 03 00 09 0C 00 05 00 06 01 00 0F 
 .... */
 
-public class Test2 {
+public class Test2_A {
 	public static void main(String[] args) throws IOException {
+		FileInputStream r = new FileInputStream("bin\\ex1\\InputStream\\InputStreamEx1.class");
+		int data =0;
+		int i=0;
+		
+		
+		while((data = r.read())!= -1) {
+			++i;
+			String hexString = Integer.toHexString(data).toUpperCase();
+			System.out.printf("%3s",hexString+" ");
+		
+			if(i%16==0) {
+				System.out.println();
+			}
+			
+		}
+		r.close();
 	
+	
+		
 		
 	}
 
