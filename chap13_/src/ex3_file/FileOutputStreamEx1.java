@@ -20,12 +20,12 @@ public class FileOutputStreamEx1 {
 		System.out.println("out.txt 파일에 내용이 저장됩니다.");
 //		FileOutputStream fos = new FileOutputStream("out.txt");
 		FileOutputStream fos = new FileOutputStream("out.txt",true);
-		//파일에없다면 만들어줌
+		
 		
 		/*
 		 * fos : out.txt 파일에 내용을 쓸수 있는 바이트형출력스트림
 		 *   out.txt 파일이 없으면 out.txt 파일을 생성하여 내용 출력
-		 *   out.txt 파일이 있으면 out.txt 파일에 내용 출력. 기존의 내용을 사라짐. 최종결과만 출력
+		 *   out.txt 파일이 있으면 out.txt 파일에 내용 출력. 기존의 내용 사라짐. 최종결과만 출력
 		 * 
 		 * new FileOutputStream("out.txt")  : out.txt 파일에 내용 출력.최종내용만남음
 		 * new FileOutputStream("out.txt",true) : out.txt 파일에 내용 출력. 

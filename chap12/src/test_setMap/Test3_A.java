@@ -220,7 +220,6 @@ public class Test3_A {
 		catch(InputMismatchException e){
 			System.out.println("처음부터 다시입력해주세요");
 			scan.next();
-
 		}
 
 	}

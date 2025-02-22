@@ -36,7 +36,7 @@ public class FileReaderEx1 {
 		fr =  new FileReader("src\\ex1\\InputStream\\GG.java");
 		while((data=fr.read(buf,0,buf.length))!= -1) {
 			System.out.print(new String(buf,0,data));
-			System.out.println("data ::::"+data);
+			System.out.print("data ::::"+data);
 		}
 		
 		
