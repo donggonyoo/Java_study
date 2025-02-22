@@ -1,5 +1,7 @@
 package ex3_file;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -15,20 +17,31 @@ import java.util.Scanner;
  */
 public class Exam2 {
 	public static void main(String[] args) throws IOException {
-		FileWriter fw =  new FileWriter("data.txt");
 		Scanner scan = new Scanner(System.in);
+		FileOutputStream fw =  new FileOutputStream("data.txt",true);
 		while(true) {
 			System.out.print("내용입력 : ");
-			String next = scan.next();
+			String next = scan.nextLine();
 			if(next.equals("exit")) {
-				fw.flush();
-				fw.close();
 				break;
 			}
-			fw.write(next);
-			
-			
+			fw.write((next+"\n").getBytes());
 		}
+		fw.close();
+		
+		//-----------------------
+//		FileWriter fw =  new FileWriter("data.txt");
+//		while(true) {
+//			System.out.print("내용입력 : ");
+//			String next = scan.next();
+//			if(next.equals("exit")) {
+//				break;
+//			}
+//			fw.write(next);
+		//Write는 문자열자체를 읽기때문에 byte로변환해줄필요없음
+//			
+//		}
+//		fw.close();
 	}
 
 }
