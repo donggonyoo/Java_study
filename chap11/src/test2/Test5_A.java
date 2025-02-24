@@ -14,14 +14,14 @@ import java.util.Random;
 
 public class Test5_A {
 	public static void main(String[] args) {
-		for(int i=0;i<20;i++) {
-			System.out.print(getRand(1,-3)+",");
-		}
-		System.out.println();
-		for(int i=0;i<20;i++) {
-			System.out.print(getRand(-1,3)+",");
+//		for(int i=0;i<20;i++) {
+//			System.out.print(getRand(1,-3)+",");
+//		}
+//		System.out.println();
+//		for(int i=0;i<20;i++) {
+//			System.out.print(getRand(-1,3)+",");
 		}
 	}
 
 	
-}
+

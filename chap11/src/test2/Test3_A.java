@@ -15,10 +15,10 @@ package test2;
 public class Test3_A {
 	public static void main(String[] args) {
 		String str = "가나다";
-		System.out.println(format(str, 7, 0));
-		System.out.println(format(str, 7, 1));
-		System.out.println(format(str, 7, 2));
-		System.out.println(format(str, 2, 0));
+//		System.out.println(format(str, 7, 0));
+//		System.out.println(format(str, 7, 1));
+//		System.out.println(format(str, 7, 2));
+//		System.out.println(format(str, 2, 0));
 	}
 
 

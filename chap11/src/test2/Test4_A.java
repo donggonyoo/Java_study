@@ -21,10 +21,10 @@ null
 public class Test4_A {
 	public static void main(String[] args) {
 		  String src = "A12345";
-		  System.out.println(filldash(src, 10));
-		  System.out.println(filldash(src, -1));
-		  System.out.println(filldash(src, 3));
-		  System.out.println(filldash(null, 3));
+//		  System.out.println(filldash(src, 10));
+//		  System.out.println(filldash(src, -1));
+//		  System.out.println(filldash(src, 3));
+//		  System.out.println(filldash(null, 3));
 	}
 
 }
