@@ -27,7 +27,7 @@ bbb.txt
 exit
  */
 public class Test3_A {
-	public static void main(String[] args) {
+	public static void main(String[] args)throws IOException{
 		Scanner scan = new Scanner(System.in);
 		while(true) {
 			System.out.println("파일명을 입력하세요 (종료 exit)");
@@ -49,24 +49,29 @@ public class Test3_A {
 //				String bak = split[0]+".bak";//.txt앞의 파일명을 따옴
 				
 				Reader r =new FileReader(file);
-				
+				Writer w  =  new FileWriter(bak);
 //				FileInputStream r = new FileInputStream(file);
 				int data=0;
 				char[] a = new char[2000];
 //				byte[] a = new byte[r.available()];
 
-				Writer w  =  new FileWriter(bak);
+				
 //				FileOutputStream w =  new FileOutputStream(file+".bak");
 				while((data=r.read(a))!= -1) {
 					w.write(a,0,data);
 				}
-				r.close();
 				w.flush();
 				w.close();
+				r.close();
+				
 				System.out.println(file+"--> "+bak+" 복사완료");
+				
 
 			} catch (IOException e) {
 				System.out.println("파일이 없어요");
+			}
+			finally {
+				
 			}
 		}
 	}

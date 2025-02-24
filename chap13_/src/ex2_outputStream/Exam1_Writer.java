@@ -1,4 +1,4 @@
-package ex2.outputStream;
+package ex2_outputStream;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;

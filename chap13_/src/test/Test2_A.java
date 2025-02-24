@@ -20,7 +20,7 @@ CA FE BA BE 00 00 00 34 00 8E 07 00 02 01 00 17
 
 public class Test2_A {
 	public static void main(String[] args) throws IOException {
-		FileInputStream r = new FileInputStream("bin\\ex1\\InputStream\\InputStreamEx1.class");
+		FileInputStream r = new FileInputStream("bin\\ex1_InputStream\\InputStreamEx1.class");
 		int data =0;
 		int i=0;
 		

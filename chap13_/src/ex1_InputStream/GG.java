@@ -1,4 +1,4 @@
-package ex1.InputStream;
+package ex1_InputStream;
 
 public class GG {
 
