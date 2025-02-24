@@ -12,6 +12,7 @@ public class Ex1 {
 		
 		int a = scan.nextInt();
 		System.out.print(a+"초 : ");
+		System.out.println();
 		
 		
 		int hours = a/3600;
