@@ -7,22 +7,20 @@ import java.util.logging.SimpleFormatter;
 
 import javax.xml.crypto.Data;
 
-public class Event {
+public class Event5 {
 	Date firstDay;
 	Date lastDay;
 	String title;
 	String details;
 	SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
 	
-	public void FirstDay(int a, int b , int c) throws ParseException {
-		String day =  a+"-"+b+"-"+c;
-		Date date = f.parse(day);
+	public void FirstDay(String s/*yyyy-MM-dd*/) throws ParseException {
+		Date date = f.parse(s);
 		this.firstDay = date;
 	}
 	
-	public void LastDay(int a, int b , int c) throws ParseException {
-		String day =  a+"-"+b+"-"+c;
-		Date date = f.parse(day);
+	public void LastDay(String s/*yyyy-MM-dd*/) throws ParseException {
+		Date date = f.parse(s);
 		this.lastDay = date;
 	}
 
