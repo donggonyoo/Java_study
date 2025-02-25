@@ -1,5 +1,6 @@
 package project_;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,6 +12,10 @@ public class Main {
 		hashMap.put(3, "ㅋㅋ");
 		hashMap.remove(1, "안녕");
 		System.out.println(hashMap);
+		
+		LocalDate of = LocalDate.of(2025, 12, 2);
+		int monthValue = of.getMonthValue();
+		System.out.println(monthValue);
 	}
 
 }

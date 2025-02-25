@@ -7,8 +7,8 @@ public class GG {
 		Event5 event = new Event5();
 		event.title = "제목";
 		event.details = "ㅇㅇ";
-		event.FirstDay(2025, 11, 20);
-		event.LastDay(2025, 11, 22);
+//		event.FirstDay(2025, 11, 20);
+//		event.LastDay(2025, 11, 22);
 		System.out.println(event);
 		
 	
