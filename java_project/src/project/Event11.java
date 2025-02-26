@@ -16,6 +16,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -37,12 +38,12 @@ class Event implements Serializable,Comparable<Event>{
 	 */
 	private static final long serialVersionUID = 1L;
 	String title;
-	String startTime;
-	String lastTime;
+	LocalDateTime startTime;
+	LocalDateTime lastTime;
 	String details;
 	LocalDate date;
 
-	Event(LocalDate date,String title, String startTime,String lastTime, String details) {
+	Event(LocalDate date,String title, LocalDateTime startTime,LocalDateTime lastTime, String details) {
 		this.title = title;
 		this.startTime = startTime;
 		this.details = details;
@@ -53,14 +54,13 @@ class Event implements Serializable,Comparable<Event>{
 
 	@Override
 	public int compareTo(Event o) {
-
-		return this.startTime.hashCode()>o.startTime.hashCode()?1:this.startTime.hashCode()==o.startTime.hashCode()?0:-1;
+		return this.startTime.compareTo(o.startTime);
 	}
 
 
 	@Override
 	public String toString() {
-		return "[제목] : "+title+"\n [시간] :"+date+" "+startTime+" ~ "+date+" "+lastTime+
+		return "[제목] : "+title+"\n [시간] :" +startTime+"~"+lastTime+
 				"\n[세부사항] :"+details;
 
 	}
@@ -72,7 +72,7 @@ class Event implements Serializable,Comparable<Event>{
 public class Event11 {
 	private static String name;
 	static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-	static DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern(formatter+" HH-mm-ss");
+	static DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 	
 	public static void main(String[] args) throws IOException, ClassNotFoundException, ParseException{
 
@@ -135,15 +135,17 @@ public class Event11 {
 			String title = scan.nextLine();
 			System.out.print(" 시작 시간을 입력하세요:(HH-mm-ss) ");
 			String startTime = scan.nextLine();
+			LocalDateTime start = LocalDateTime.parse(date2+" "+startTime,formatter2);
 			System.out.print(" 종료시간을 입력하세요:(HH-mm-ss) ");
 			String lastTime = scan.nextLine();
+			LocalDateTime last = LocalDateTime.parse(date2+" "+lastTime,formatter2);
 			System.out.print(" 상세 정보를 입력하세요: ");
 			String details = scan.nextLine();
 			System.out.println("이벤트를 변경 하실건가요??(y)");
 			String y = scan.nextLine();
 			if(y.equalsIgnoreCase("y")) {
 				System.out.println("변경완료");
-				list.add(new Event(date2, title, startTime, lastTime, details));}
+				list.add(new Event(date2, title, start, last, details));}
 			else {
 				System.out.println("변경취소");}
 			events.clear();//한번 싹 지우고
@@ -204,6 +206,10 @@ public class Event11 {
 		String date = scan.nextLine();
 		LocalDate date2 = LocalDate.parse(date,formatter);//String->date (yyyy-MM-dd)형태로반환하자
 		List<Event> list = events.get(name);
+		if(list==null) {
+			System.out.println("리스트에 아무것도없습니다");
+			return;
+		}
 		Collections.sort(list);
 		for (int i = 0; i < list.size(); i++) {
 			if(list.get(i).date.equals(date2)) {
@@ -227,11 +233,13 @@ public class Event11 {
 			String title = scan.nextLine();
 			System.out.print("이벤트 시작 시간을 입력하세요: ");
 			String startTime = scan.nextLine();
+			LocalDateTime start = LocalDateTime.parse(date+" "+startTime,formatter2);
 			System.out.print("이벤트 종료 시간을 입력하세요: ");
 			String endTime = scan.nextLine();
+			LocalDateTime last = LocalDateTime.parse(date+" "+endTime,formatter2);
 			System.out.print("이벤트 상세 정보를 입력하세요: ");
 			String details = scan.nextLine();
-			Event event = new Event(date,title, startTime,endTime, details);
+			Event event = new Event(date,title, start,last, details);
 			List<Event> list = events.get(name);
 			if(list==null) {
 				list=new ArrayList<Event>();
