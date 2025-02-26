@@ -45,7 +45,7 @@ class Event implements Serializable,Comparable<Event>{
 	LocalDateTime lastTime;
 	String details;
 	LocalDate date;
-
+	 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 	Event(LocalDate date,String title, LocalDateTime startTime,LocalDateTime lastTime, String details) {
 		this.title = title;
 		this.startTime = startTime;
@@ -56,19 +56,25 @@ class Event implements Serializable,Comparable<Event>{
 
 	@Override
 	public int compareTo(Event o) {
-		return this.startTime.compareTo(o.startTime);
+		return this.startTime.compareTo(o.startTime); 
+		//시작시간순으로 정렬을 위해 Comaprable 구현후 메서드 오버라이딩
+	}
+	private String formatTime(LocalDateTime t) {
+		return t.format(formatter);
+		//LocalDateTime은 날짜T시간 형식으로 출력이되므로
+		//fomat을통해 보기좋게바꾸자!!
 	}
 
 	@Override
 	public String toString() {
-		return "[제목] : "+title+"\n [시간] :" +startTime+"~"+lastTime+
+		return "[제목] : "+title+"\n [시간] :" +formatTime(startTime)+"~"+formatTime(lastTime)+
 				"\n[세부사항] :"+details;
 	}
 }
 
 //--------------------------------------------------------------------------------------------------------------------
 
-public class Event11 {
+public class Project_Date {
 	private static String name;
 	static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	static DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -326,7 +332,7 @@ public class Event11 {
 				return (Map<String, List<Event>>)reader.readObject();
 				//ser파일을 읽어서 Map<String,List<Event>>타입으로 반환해준다/
 			}finally {
-				reader.close();//항상 reader를 닫아줘야함(끝없이로딩되는거 방지)
+				reader.close();//항상 reader를 닫아줘야함(끝없이 로딩되는거 방지)
 			}
 		}
 		else {
