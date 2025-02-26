@@ -208,7 +208,7 @@ public class Event11 {
 		LocalDate date2 = LocalDate.parse(date,formatter);//String->date (yyyy-MM-dd)형태로반환하자
 		List<Event> list = events.get(name);
 		if(list==null) {
-			System.out.println("리스트에 아무것도없습니다");
+			System.out.println("이벤트가 아무것도없습니다");
 			return;
 		}
 		Collections.sort(list);
@@ -272,19 +272,21 @@ public class Event11 {
 		scan.nextLine();
 		LocalDate of = LocalDate.of(year, month, 1);
 		DayOfWeek dayOfWeek = of.getDayOfWeek();
-		int firstweek = dayOfWeek.getValue()%7;
-		//첫번쨰날의 요일 (1 : 월 7:일) 7123456 7의나머지연산을해준다면 0123456 이 됨
+		int firstweek = (dayOfWeek.getValue()%7)+1;
+		//첫번쨰날의 요일   7123456 -> %7 -> 0123456(일:0 토:6) +1 -> 
+		//일월화수목금토 : 1234567 로 바뀌게됨 
 		
 		/*
 		 * Calendar ca1 = Calendar.getInstance(); ca1.set(year, month-1,1); int
 		 * firstweek =ca1.get(Calendar.DAY_OF_WEEK);//첫째날의 요일 int lastday =
+		 * Calendar의요일은 1234567(일월화수목금토) 로 이루어져있다.
 		 * ca1.getActualMaximum(Calendar.DATE);
 		 */
 		int lastday = of.with(TemporalAdjusters.lastDayOfMonth()).getDayOfMonth();//이번달의 마지막요일
 		System.out.println("\t"+year + "년 " + month + "월");
 		System.out.printf("%-3c %-3c %-3c%-2c %-3c %-2c %-3c",'일','월','화','수','목','금','토');
 		System.out.println();
-		for(int i=0,day=1;day<=lastday;i++) {
+		for(int i=1,day=1;day<=lastday;i++) {
 			int count=0;
 			for (Event e : list) {//date는 연,월,일 추출이너무힘들어서 LocalDate 사용함
 				int monthValue = e.date.getMonthValue();//리스트의요소에서 달을 출력
@@ -295,9 +297,9 @@ public class Event11 {
 					//연,월,일이 입력한날짜과 같다면 count++; (루프가한번돌면 count는 초기화됨)
 				}
 			}
-			if(i < firstweek) {
+			if(i < (firstweek)) {
 				System.out.printf("%-4s"," ");
-				}// i가 첫째날의 요일(0:일 7:토)이 될떄까지 간격을띄워줌
+				}// i가 첫째날의 요일(0:일 6:토)이 될떄까지 간격을띄워줌
 			else {
 				if(count>0) {//이벤트가있다면 글씨의간격을 줄이고 (count)를 붙여줌
 					System.out.printf("%-2d(%d)",day++,count);
@@ -307,7 +309,7 @@ public class Event11 {
 					System.out.printf("%-4d",day++);
 				}
 			}
-			if((i+1)%7==0)System.out.println();//6이 토요일이기때문에 이렇게해줘야함
+			if(i%7==0)System.out.println();
 		}System.out.println();
 	}
 
