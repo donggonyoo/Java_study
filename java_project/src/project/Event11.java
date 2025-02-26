@@ -15,9 +15,12 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -51,20 +54,16 @@ class Event implements Serializable,Comparable<Event>{
 		this.date = date;
 	}
 
-
 	@Override
 	public int compareTo(Event o) {
 		return this.startTime.compareTo(o.startTime);
 	}
 
-
 	@Override
 	public String toString() {
 		return "[제목] : "+title+"\n [시간] :" +startTime+"~"+lastTime+
 				"\n[세부사항] :"+details;
-
 	}
-
 }
 
 //--------------------------------------------------------------------------------------------------------------------
@@ -73,6 +72,8 @@ public class Event11 {
 	private static String name;
 	static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	static DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+	//시간을 입력받을때 초는 생략하기위한포맷형식( String->LocalDateTime)
+	
 	
 	public static void main(String[] args) throws IOException, ClassNotFoundException, ParseException{
 
@@ -231,10 +232,10 @@ public class Event11 {
 			LocalDate date = LocalDate.parse(a,formatter);//String->date (yyyy-MM-dd)형태로반환하자
 			System.out.print("이벤트 제목을 입력하세요: ");
 			String title = scan.nextLine();
-			System.out.print("이벤트 시작 시간을 입력하세요: ");
+			System.out.print("이벤트 시작 시간을 입력하세요:(HH-mm) ");
 			String startTime = scan.nextLine();
 			LocalDateTime start = LocalDateTime.parse(date+" "+startTime,formatter2);
-			System.out.print("이벤트 종료 시간을 입력하세요: ");
+			System.out.print("이벤트 종료 시간을 입력하세요:(HH-mm) ");
 			String endTime = scan.nextLine();
 			LocalDateTime last = LocalDateTime.parse(date+" "+endTime,formatter2);
 			System.out.print("이벤트 상세 정보를 입력하세요: ");
@@ -247,9 +248,13 @@ public class Event11 {
 			list.add(event);
 			events.put(name, list);
 			System.out.println("이벤트가 추가되었습니다.");	   
-		} catch (Exception e) {
+		} catch (InputMismatchException e) { 
 			System.out.println("형식을 맞추세요");
 			System.out.println(e.getMessage());
+			return;
+		}
+		catch(DateTimeParseException e) {
+			System.out.println("올바른날짜형식이 아니에요");
 			return;
 		}
 	}
@@ -265,24 +270,34 @@ public class Event11 {
 		System.out.print("조회할 월을 입력하세요: ");
 		int month = scan.nextInt();
 		scan.nextLine();
-		Calendar ca1 = Calendar.getInstance();
-		ca1.set(year, month-1,1);
-		int firstweek =ca1.get(Calendar.DAY_OF_WEEK);//첫째날의 요일
-		int lastday = ca1.getActualMaximum(Calendar.DATE);
+		LocalDate of = LocalDate.of(year, month, 1);
+		DayOfWeek dayOfWeek = of.getDayOfWeek();
+		int firstweek = dayOfWeek.getValue()%7;
+		//첫번쨰날의 요일 (1 : 월 7:일) 7123456 7의나머지연산을해준다면 0123456 이 됨
+		
+		/*
+		 * Calendar ca1 = Calendar.getInstance(); ca1.set(year, month-1,1); int
+		 * firstweek =ca1.get(Calendar.DAY_OF_WEEK);//첫째날의 요일 int lastday =
+		 * ca1.getActualMaximum(Calendar.DATE);
+		 */
+		int lastday = of.with(TemporalAdjusters.lastDayOfMonth()).getDayOfMonth();//이번달의 마지막요일
 		System.out.println("\t"+year + "년 " + month + "월");
-		System.out.printf("%-3c %-3c %-4c%-2c %-3c %-2c %-3c",'일','월','화','수','목','금','토');
+		System.out.printf("%-3c %-3c %-3c%-2c %-3c %-2c %-3c",'일','월','화','수','목','금','토');
 		System.out.println();
-		for(int i=1,day=1;day<=lastday;i++) {
+		for(int i=0,day=1;day<=lastday;i++) {
 			int count=0;
 			for (Event e : list) {//date는 연,월,일 추출이너무힘들어서 LocalDate 사용함
-				int monthValue = e.date.getMonthValue();
-				int year2 = e.date.getYear();
-				int dayofMonth = e.date.getDayOfMonth();
+				int monthValue = e.date.getMonthValue();//리스트의요소에서 달을 출력
+				int year2 = e.date.getYear();//리스트의요소에서 연을 출력
+				int dayofMonth = e.date.getDayOfMonth();//리스트의요소에서 일을 출력
 				if(monthValue==month && year==year2 && day==dayofMonth) {
-					count++;//연 월 일이 입력과 같다면 count++; (루프가한번돌면 count는 초기화됨)
+					count++;
+					//연,월,일이 입력한날짜과 같다면 count++; (루프가한번돌면 count는 초기화됨)
 				}
 			}
-			if(i < firstweek) {System.out.printf("%-4s"," ");}
+			if(i < firstweek) {
+				System.out.printf("%-4s"," ");
+				}// i가 첫째날의 요일(0:일 7:토)이 될떄까지 간격을띄워줌
 			else {
 				if(count>0) {//이벤트가있다면 글씨의간격을 줄이고 (count)를 붙여줌
 					System.out.printf("%-2d(%d)",day++,count);
@@ -292,39 +307,29 @@ public class Event11 {
 					System.out.printf("%-4d",day++);
 				}
 			}
-			if(i%7==0)System.out.println();
+			if((i+1)%7==0)System.out.println();//6이 토요일이기때문에 이렇게해줘야함
 		}System.out.println();
 	}
 
 
-//--------------------------------------------------------------------------------------------------------------------
-	//Event로드 ( 아이디를 입력하면 바로 발생되는 메서드)
+//-------------------------------Event 로드 ( 아이디를 입력하면 바로 발생되는 메서드)-------------------------------------------------------------------------------------
+	
 	private static Map<String, List<Event>> loadEvents()throws IOException, ClassNotFoundException {
-		File file = new File(name + ".ser");
+		File file = new File(name + ".ser");//입력받은 name이름과같은 ser파일을 불러옴
 
 		if (file.exists()) {
 			ObjectInputStream reader=null;
 			try {
 				reader = new ObjectInputStream(new FileInputStream(file));
 				return (Map<String, List<Event>>)reader.readObject();
+				//ser파일을 읽어서 Map<String,List<Event>>타입으로 반환해준다/
 			}finally {
-				reader.close();
+				reader.close();//항상 reader를 닫아줘야함(끝없이로딩되는거 방지)
 			}
-
 		}
 		else {
+			//파일이 없다면 HashMap<String,List<Event>>을 만들어줘서반환
 			return new HashMap<String,List<Event>>();
 		}
-
-
 	}
 }
-
-
-
-
-
-
-
-
-

@@ -1,8 +1,11 @@
 package project;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
 
 public class GG {
 	public static void main(String[] args) {
@@ -27,6 +30,24 @@ public class GG {
 		LocalDateTime parse2 = LocalDateTime.parse(input2,formatter2);
 		System.out.println("input : "+input2);
 		System.out.println("parse2 : "+parse2);
+		
+		LocalDate of = LocalDate.of(2025, 12, 1);
+		int monthValue = of.getMonthValue();
+		LocalDate with = of.with(TemporalAdjusters.lastDayOfMonth());
+	
+	
+		for (int i = 1; i < with.getDayOfMonth(); i++) {
+			LocalDate of2 = LocalDate.of(2025, 12, i);
+			DayOfWeek dayOfWeek = of2.getDayOfWeek();
+			System.out.println(dayOfWeek);
+			int value = dayOfWeek.getValue();
+			System.out.println(value);
+			LocalDate plusDays = of2.plusDays(1);
+			System.out.println(plusDays);
+			
+		}
+
+	
 	}
 	
 
