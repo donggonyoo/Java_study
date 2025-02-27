@@ -3,7 +3,7 @@ package ex6_sort;
 import java.util.Comparator;
 import java.util.stream.Stream;
 
-import student.Student;
+import clazz.Student;
 
 public class SortedEx3 {
 	public static void main(String[] args) {

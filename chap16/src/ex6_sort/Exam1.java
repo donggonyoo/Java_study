@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import student.Student;
+import clazz.Student;
 
 public class Exam1 {
 	public static void main(String[] args) {

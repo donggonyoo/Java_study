@@ -1,4 +1,4 @@
-package student;
+package clazz;
 
 public class Student implements Comparable<Student>{
 	String name;

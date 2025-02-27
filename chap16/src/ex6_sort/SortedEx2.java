@@ -3,7 +3,7 @@ package ex6_sort;
 import java.util.Arrays;
 import java.util.List;
 
-import student.Student;
+import clazz.Student;
 /*
  * Student 클래스의 기본정렬 방식 구현 : 이름순으로
  * sorted() : Stream의 요소들을 정렬해 Stream 으로 리턴

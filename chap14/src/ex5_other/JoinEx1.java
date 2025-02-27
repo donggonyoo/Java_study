@@ -55,6 +55,7 @@ public class JoinEx1 {
 		int sum=0;
 		for (SumRunnable s : list) {
 			//스레드의 sum을 모두 모아
+			System.out.print(s.sum+"+");
 			sum+=s.sum;
 			
 		}

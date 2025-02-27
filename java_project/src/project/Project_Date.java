@@ -62,7 +62,7 @@ class Event implements Serializable,Comparable<Event>{
 	private String formatTime(LocalDateTime t) {
 		return t.format(formatter);
 		//LocalDateTime은 날짜T시간 형식으로 출력이되므로
-		//fomat을통해 보기좋게바꾸자!!
+		//format 해 보기좋게바꾸자!!
 	}
 
 	@Override
