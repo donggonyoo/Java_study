@@ -1,4 +1,0 @@
-123abc가나다
-FileOutputStream 예제입니다.
-Output
-FileWrite는 문자열 출력이가능해요!!

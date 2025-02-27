@@ -27,8 +27,9 @@ public class MapEx1 {
 		List<String> list = Arrays.asList("홍길동2","김삿갓","구운몽","임꺽정나간다","전우치43","이순신");
 		System.out.println();
 		//글자의 크기로 새로운 IntStream 생성
-		//Stream<String> list.stream();(리스트의요소를 가지고있는 stream)
-//		IntStream isr = list.stream().mapToInt(String::length);//각 String의length를 반환함
+		//Stream<String>  list.stream();(리스트의요소를 가지고있는 stream)
+//		IntStream isr = list.stream().mapToInt(String::length);//각 String의length를 반환해 IntStream으로
+		
 		IntStream isr = list.stream().mapToInt(s->s.length());//각 String의length를 반환함
 	
 		isr.forEach(System.out::println); /* 주의 : 한번만읽으면 다시 읽을 수 없게됨 */
