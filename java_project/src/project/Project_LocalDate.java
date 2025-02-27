@@ -46,7 +46,7 @@ class Event implements Serializable,Comparable<Event>{
 	String details;
 	LocalDate date;
 	
-	 DateTimeFormatter formatter3 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
 	 
 	Event(LocalDate date,String title, LocalDateTime startTime,LocalDateTime lastTime, String details) {
 		this.title = title;
@@ -62,7 +62,7 @@ class Event implements Serializable,Comparable<Event>{
 		//시작시간순으로 정렬을 위해 Comaprable 구현후 메서드 오버라이딩
 	}
 	private String formatTime(LocalDateTime t) {
-		return t.format(formatter3);
+		return t.format(Project_LocalDate.formatter2);
 		//LocalDateTime은 날짜T시간 형식으로 출력이되므로
 		//format 해 보기좋게바꾸자!!
 	}
@@ -76,7 +76,7 @@ class Event implements Serializable,Comparable<Event>{
 
 //--------------------------------------------------------------------------------------------------------------------
 
-public class Project_Date {
+public class Project_LocalDate {
 	private static String name;
 	static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	static DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -123,18 +123,27 @@ public class Project_Date {
 		String date = scan.nextLine();
 		int count=0;
 		LocalDate date2 = LocalDate.parse(date,formatter);//String->date (yyyy-MM-dd)형태로반환하자
+		List<Event> firstList = events.get(name);
 		List<Event> list = events.get(name);
+		List<Event> newList = new ArrayList<Event>();
 		for (Event e : list) {
 			if(e.date.equals(date2)) {
-				int indexOf = list.indexOf(e);
-				System.out.println((indexOf+1)+"번"+e);
-				count++;//같은날짜에 이벤트가 2개인 경우라면인덱스를 반환해서
+				count++;
+				newList.add(e);//새로운리스트에 추가	
+//				int indexOf = list.indexOf(e);
+//				System.out.println((indexOf+1)+"번"+e);
+				//같은날짜에 이벤트가 2개인 경우라면인덱스를 반환해서
 				//사용자가 지정한 인덱스를 삭제하기위함!
 			}
 		}
+		
 		if(count==0) {System.out.println("변경할 이벤트가 없어요");return;}
 
 		try {
+			for (int i = 1; i <= count; i++) {
+				System.out.println(i+"번 : "+newList.get(i-1));
+			}
+			
 			System.out.println("변경할 제목의 번호를 입력하세요 : (안하려면 문자를 입력하세요)");
 			int index = scan.nextInt();
 			
@@ -153,14 +162,18 @@ public class Project_Date {
 			System.out.println("이벤트를 변경 하실건가요??(y)");
 			String y = scan.nextLine();
 			if(y.equalsIgnoreCase("y")) {
-				System.out.print(list.get(index-1).title+"-->"+title+"\n");
-				list.remove((index-1));
+				System.out.print(newList.get(index-1).title+"-->"+title+"\n");
+				list.remove(newList.get(index-1)); 
 				System.out.println("변경완료");
-				list.add(new Event(date2, title, start, last, details));}
+				list.add(new Event(date2, title, start, last, details));
+				events.clear();//한번 싹 지우고
+				events.put(name, list);//바꾼리스트를 넣는판단이 맞는거같다!!!
+				}
 			else {
-				System.out.println("변경취소");}
-			events.clear();//한번 싹 지우고
-			events.put(name, list);//바꾼리스트를 넣는판단이 맞는거같다!!!
+				System.out.println("변경취소"); //아니라면 아무 변화도 주지않는다 
+				return;
+				}
+			
 			//그렇지않다면 events맵에 변화가 전혀없을거다 list는 반환한 객체기때문에 events의 변경과 무관함
 		}
 		catch(InputMismatchException e) {
@@ -169,7 +182,6 @@ public class Project_Date {
 			return;
 		}
 	}
-
 
 	//--------------------------------------------------------------------------------------------------------------------
 
@@ -275,6 +287,9 @@ public class Project_Date {
 			return;
 		}
 	}
+//----------------------------------------ParseDate메서드( 포맷팅)----------------------------------------------------------
+	
+	
 
 //--------------------------------------------------------------------------------------------------------------------
 	//조회메서드( 달력 )
