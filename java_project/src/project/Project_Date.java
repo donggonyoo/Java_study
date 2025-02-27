@@ -45,7 +45,9 @@ class Event implements Serializable,Comparable<Event>{
 	LocalDateTime lastTime;
 	String details;
 	LocalDate date;
-	 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+	
+	 DateTimeFormatter formatter3 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+	 
 	Event(LocalDate date,String title, LocalDateTime startTime,LocalDateTime lastTime, String details) {
 		this.title = title;
 		this.startTime = startTime;
@@ -60,7 +62,7 @@ class Event implements Serializable,Comparable<Event>{
 		//시작시간순으로 정렬을 위해 Comaprable 구현후 메서드 오버라이딩
 	}
 	private String formatTime(LocalDateTime t) {
-		return t.format(formatter);
+		return t.format(formatter3);
 		//LocalDateTime은 날짜T시간 형식으로 출력이되므로
 		//format 해 보기좋게바꾸자!!
 	}
@@ -125,7 +127,7 @@ public class Project_Date {
 		for (Event e : list) {
 			if(e.date.equals(date2)) {
 				int indexOf = list.indexOf(e);
-				System.out.println(indexOf+"번"+e);
+				System.out.println((indexOf+1)+"번"+e);
 				count++;//같은날짜에 이벤트가 2개인 경우라면인덱스를 반환해서
 				//사용자가 지정한 인덱스를 삭제하기위함!
 			}
@@ -135,15 +137,15 @@ public class Project_Date {
 		try {
 			System.out.println("변경할 제목의 번호를 입력하세요 : (안하려면 문자를 입력하세요)");
 			int index = scan.nextInt();
-			list.remove(index);
+			
 			scan.nextLine();
 
 			System.out.print(" 제목을 입력하세요: ");
 			String title = scan.nextLine();
-			System.out.print(" 시작 시간을 입력하세요:(HH-mm-ss) ");
+			System.out.print(" 시작 시간을 입력하세요:(HH:mm) ");
 			String startTime = scan.nextLine();
 			LocalDateTime start = LocalDateTime.parse(date2+" "+startTime,formatter2);
-			System.out.print(" 종료시간을 입력하세요:(HH-mm-ss) ");
+			System.out.print(" 종료시간을 입력하세요:(HH:mm) ");
 			String lastTime = scan.nextLine();
 			LocalDateTime last = LocalDateTime.parse(date2+" "+lastTime,formatter2);
 			System.out.print(" 상세 정보를 입력하세요: ");
@@ -151,6 +153,8 @@ public class Project_Date {
 			System.out.println("이벤트를 변경 하실건가요??(y)");
 			String y = scan.nextLine();
 			if(y.equalsIgnoreCase("y")) {
+				System.out.print(list.get(index-1).title+"-->"+title+"\n");
+				list.remove((index-1));
 				System.out.println("변경완료");
 				list.add(new Event(date2, title, start, last, details));}
 			else {
@@ -181,7 +185,7 @@ public class Project_Date {
 			if(e.date.equals(date2)) {
 				int indexOf = list.indexOf(e);
 				count++;
-				System.out.println(indexOf+"번"+e);
+				System.out.println((indexOf+1)+"번"+e);
 			}
 		}
 		if(count==0) {
@@ -191,8 +195,9 @@ public class Project_Date {
 		System.out.println("삭제할 이벤트의 번호를 입력해주세요(안하려면 문자입력)");
 		try {
 			int num = scan.nextInt();
-			list.remove(num);
-			System.out.println(num+"번 삭제완료");
+			System.out.println(list.get(num-1)+"삭제완료");
+			list.remove((num-1));
+			
 			events.clear();
 			events.put(name, list);
 
@@ -211,6 +216,7 @@ public class Project_Date {
 		int count=0;
 		System.out.print("조회할 날짜를 입력하세요 (yyyy-MM-dd): ");
 		String date = scan.nextLine();
+		try {
 		LocalDate date2 = LocalDate.parse(date,formatter);//String->date (yyyy-MM-dd)형태로반환하자
 		List<Event> list = events.get(name);
 		if(list==null) {
@@ -227,6 +233,11 @@ public class Project_Date {
 		if (count==0) {
 			System.out.println("해당 날짜에 이벤트가 없습니다.");
 		}	
+		}
+		catch(DateTimeParseException e) {
+			System.out.println("올바른 날짜형식을 입력해주세요");
+			return;
+		}
 	}
 	//--------------------------------------------------------------------------------------------------------------------
 	//추가메서드
@@ -238,10 +249,10 @@ public class Project_Date {
 			LocalDate date = LocalDate.parse(a,formatter);//String->date (yyyy-MM-dd)형태로반환하자
 			System.out.print("이벤트 제목을 입력하세요: ");
 			String title = scan.nextLine();
-			System.out.print("이벤트 시작 시간을 입력하세요:(HH-mm) ");
+			System.out.print("이벤트 시작 시간을 입력하세요:(HH:mm) ");
 			String startTime = scan.nextLine();
 			LocalDateTime start = LocalDateTime.parse(date+" "+startTime,formatter2);
-			System.out.print("이벤트 종료 시간을 입력하세요:(HH-mm) ");
+			System.out.print("이벤트 종료 시간을 입력하세요:(HH:mm) ");
 			String endTime = scan.nextLine();
 			LocalDateTime last = LocalDateTime.parse(date+" "+endTime,formatter2);
 			System.out.print("이벤트 상세 정보를 입력하세요: ");
@@ -290,17 +301,20 @@ public class Project_Date {
 		 */
 		int lastday = of.with(TemporalAdjusters.lastDayOfMonth()).getDayOfMonth();//이번달의 마지막요일
 		System.out.println("\t"+year + "년 " + month + "월");
-		System.out.printf("%-3c %-3c %-3c%-2c %-3c %-2c %-3c",'일','월','화','수','목','금','토');
+		System.out.printf("%-3c %-3c %-3c%-3c %-3c %-2c %-3c",'일','월','화','수','목','금','토');
 		System.out.println();
 		for(int i=1,day=1;day<=lastday;i++) {
 			int count=0;
-			for (Event e : list) {//date는 연,월,일 추출이너무힘들어서 LocalDate 사용함
-				int monthValue = e.date.getMonthValue();//리스트의요소에서 달을 출력
-				int year2 = e.date.getYear();//리스트의요소에서 연을 출력
-				int dayofMonth = e.date.getDayOfMonth();//리스트의요소에서 일을 출력
-				if(monthValue==month && year==year2 && day==dayofMonth) {
+			if(list==null) {}//list에 아무것도들어있지않다면 for문을 무시함
+			else {
+				for (Event e : list) {//date는 연,월,일 추출이너무힘들어서 LocalDate 사용함
+					int monthValue = e.date.getMonthValue();//리스트의요소에서 달을 출력
+					int year2 = e.date.getYear();//리스트의요소에서 연을 출력
+					int dayofMonth = e.date.getDayOfMonth();//리스트의요소에서 일을 출력
+					if(monthValue==month && year==year2 && day==dayofMonth) {
 					count++;
 					//연,월,일이 입력한날짜과 같다면 count++; (루프가한번돌면 count는 초기화됨)
+					}
 				}
 			}
 			if(i < (firstweek)) {
