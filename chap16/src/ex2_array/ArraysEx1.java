@@ -15,7 +15,7 @@ public class ArraysEx1 {
 		
 //----------------------------------Stream<T>-----------------------------
 		String[] arr = new String[] {"a","b","c"};
-		Stream<String> stream1 = Arrays.stream(arr);
+	    Stream<String> stream1 = Arrays.stream(arr);
 		stream1.forEach(s->System.out.print(s+"\t"));
 		System.out.println();
 		Stream<String> stream2 = Arrays.stream(arr,1,3);//1번2번 배열만.!

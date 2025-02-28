@@ -11,8 +11,6 @@ import java.util.Scanner;
 public class Client {
 	 public static String name;
 
-	
-	
 	public static void main(String[] args) throws IOException, ClassNotFoundException, ParseException{
 
 		Scanner scan = new Scanner(System.in);

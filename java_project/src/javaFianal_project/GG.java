@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Calendar;
+import java.util.HashMap;
 
 public class GG {
 	public static void main(String[] args) {
@@ -35,11 +36,30 @@ public class GG {
 		LocalDate of = LocalDate.of(2025, 12, 1);
 		int monthValue = of.getMonthValue();
 		LocalDate with = of.with(TemporalAdjusters.lastDayOfMonth());
-	
-
-		for (int i = 1; i < 7; i++) {
-			System.out.println(i+":"+DayOfWeek.of(i));//숫자에해당하는 날짜
+		
+		
+		System.out.println("2025-02-16~~ 2025-02-22의 날짜");
+		for (int i = 16; i <= 22; i++) {
+			LocalDate date = LocalDate.of(2025, 2, i);
+			DayOfWeek Week = date.getDayOfWeek();//날짜얻기
+			int num = Week.getValue();//날짜에 해당하는 번호
+			System.out.println(num+" : "+Week);
 		}
+		
+		System.out.println("%7+1");
+		for (int i = 16; i <= 22; i++) {
+			LocalDate date = LocalDate.of(2025, 2, i);
+			DayOfWeek Week = date.getDayOfWeek();//날짜얻기
+			int num = (Week.getValue()%7)+1;//날짜에 해당하는 번호 %7 +1 
+			System.out.println(num+" : "+Week);
+		}
+		
+		
+		
+		
+		
+
+		
 		
 		
 

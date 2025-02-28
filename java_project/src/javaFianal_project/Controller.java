@@ -55,7 +55,7 @@ public class Controller {
 	public void Add(Map<String, List<Event>> events) {
 		Scanner scan = new Scanner(System.in);
 		try {
-			System.out.println("시간을 입력하세요 : yyyy-MM-dd");
+			System.out.println("날짜을 입력하세요 : yyyy-MM-dd");
 			String a = scan.nextLine();
 			LocalDate date = Parse.StoDate(a);
 			if(date==null) {return;}
@@ -110,7 +110,8 @@ public class Controller {
 			 * Calendar의요일은 1234567(일월화수목금토) 로 이루어져있다.
 			 * ca1.getActualMaximum(Calendar.DATE);
 			 */
-			int lastday = of.with(TemporalAdjusters.lastDayOfMonth()).getDayOfMonth();//이번달의 마지막요일
+			LocalDate with = of.with(TemporalAdjusters.lastDayOfMonth());//이번달의 마지막 날짜
+			int lastday = with.getDayOfMonth();
 			System.out.println("\t"+year + "년 " + month + "월");
 			System.out.printf("%-3c %-3c %-3c%-3c %-3c %-2c %-3c",'일','월','화','수','목','금','토');
 			System.out.println();
@@ -193,33 +194,26 @@ public class Controller {
 		
 		for (Event e : list) {
 			if(e.date.equals(date2)) {
-				count++;
+				count++; //해당날짜의 이벤트 갯수
 				newList.add(e);//새로운리스트에 추가	
-				//			int indexOf = list.indexOf(e);
-				//			System.out.println((indexOf+1)+"번"+e);
-				//같은날짜에 이벤트가 2개인 경우라면인덱스를 반환해서
-				//사용자가 지정한 인덱스를 삭제하기위함!
 			}
 		}
 
-		if(count==0) {System.out.println("변경할 이벤트가 없어요");return;}
+		if(count==0) {System.out.println("해당 날짜는 변경할 이벤트가 없어요");return;}
 
 		try {
 			for (int i = 1; i <= count; i++) {
 				System.out.println(i+"번 : "+newList.get(i-1));
 			}
-
 			System.out.println("변경할 제목의 번호를 입력하세요 : (안하려면 문자를 입력하세요)");
 			int index = scan.nextInt();
-
 			scan.nextLine();
-
 			System.out.print(" 제목을 입력하세요: ");
 			String title = scan.nextLine();
 			System.out.print(" 시작 시간을 입력하세요:(HH:mm) ");
 			String startTime = scan.nextLine();
-			//Parse.StoTime(LocalDate d,String s) 입력받아 메인코드의 포맷형식과맞다면
-				//Date와 s를더해 LocalDateTime 반환
+			//Parse.StoTime(LocalDate d,String s)  
+			//Parse클래스에서 String->LocalDate 와 예외처리를 다루고있음
 			LocalDateTime start = Parse.StoTime(date2, startTime);
 			if(start==null) {return;}
 			System.out.print(" 종료시간을 입력하세요:(HH:mm) ");
@@ -250,10 +244,6 @@ public class Controller {
 			System.out.println("메뉴선택으로 돌아감");
 			return;
 		}
-		catch(DateTimeParseException e) {
-			System.out.println("올바른 날짜형식이 아닙니다");
-			return;
-		}
 	}
 //-----------------------------------------------------이벤트 삭제 ----------------------------------------------------------
 	public void Delete(Map<String, List<Event>> events) {
@@ -273,13 +263,11 @@ public class Controller {
 			if(e.date.equals(date2)) {
 				count++;
 				delList.add(e);
-				
+				}
 			}
-		}
 		if(count==0) {
 			System.out.println("해당날짜엔 삭제할게없어요");
-			return;
-		}
+			return;}
 		
 		try {
 			for (int i = 1; i <= count; i++) {
@@ -289,7 +277,6 @@ public class Controller {
 			int num = scan.nextInt();
 			System.out.println(delList.get(num-1)+" => !! 삭제완료 !!");
 			list.remove(delList.get(num-1));
-			events.clear();
 			events.put(Client.name, list);
 
 		}catch(InputMismatchException e) {
@@ -297,6 +284,5 @@ public class Controller {
 			scan.next();
 			return;
 		}
-		
 	}
 }

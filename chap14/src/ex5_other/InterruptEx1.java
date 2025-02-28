@@ -58,7 +58,7 @@ public class InterruptEx1 {
 		InterruptThread t1 = new InterruptThread();
 		t1.start();
 		Thread.sleep(2000);//2초 대기
-		t1.interrupt();//t1쓰레드에 InterruptedException 발생
+		t1.interrupt();//t1쓰레드에 강제로 InterruptedException 발생
 		
 	}
 

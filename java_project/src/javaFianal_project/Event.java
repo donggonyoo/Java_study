@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+//Serializable 인터페이스를 구현하지않은 객체를 외부전송시 
+//NotSerializableException발생
 public class Event implements Serializable,Comparable<Event>{
 	private static final long serialVersionUID = 1L;
 	
@@ -21,10 +23,10 @@ public class Event implements Serializable,Comparable<Event>{
 		this.date = date;
 	}
 
-	@Override
+	@Override //Comparable 인터페이스의 추상메서드구현
 	public int compareTo(Event o) {
 		return this.startTime.compareTo(o.startTime); 
-		//이벤트시작 시간순으로 정렬을 위해 Comaprable 구현후 메서드 오버라이딩
+		//시작시간 순으로 정렬 
 	}
 	private String formatTime(LocalDateTime t) {
 		return t.format(Parse.formatter2);
@@ -37,5 +39,4 @@ public class Event implements Serializable,Comparable<Event>{
 		return "[제목] : "+title+"\n [시간] :" +formatTime(startTime)+"~"+formatTime(lastTime)+
 				"\n[세부사항] :"+details;
 	}
-
 }

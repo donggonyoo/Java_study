@@ -16,7 +16,7 @@ class Car{
 	private String car;
 	private int qty;
 	private String remark;
-	public Car(int month, int con, String car, int qty, String remark) {
+	 Car(int month, int con, String car, int qty, String remark) {
 		super();
 		this.month = month;
 		this.con = con;
@@ -82,7 +82,6 @@ public class MapEx2_product {
 					Integer.parseInt(str[3]), 
 								temp);//String
 		});//Stream<Car> 변경
-		
 		carStream.filter(s->s.getCar().equals(carName)&&s.getCon()==con)
 		//filter로 새로만든Car객체와 조건을 비교한다.) true인 경우에만 넘김
 				.forEach(s->System.out.println(s));
