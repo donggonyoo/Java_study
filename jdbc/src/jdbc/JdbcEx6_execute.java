@@ -17,9 +17,9 @@ public class JdbcEx6_execute {
  */
 	static int count;
 	public static void main(String[] args) throws ClassNotFoundException, SQLException, IOException {
-		String sql = "select * from test3";
-		Connection conn = DBConnection.getConnection();
-		PreparedStatement ps = conn.prepareStatement(sql);
+		String sql = "select * from student";
+		Connection conn = DBConnection.getConnection(); //db를 메모리에올림
+		PreparedStatement ps = conn.prepareStatement(sql); //sql을 db로전달
 		
 		if(ps.execute()) {//select구문인경우 : true리턴
 			
@@ -35,12 +35,11 @@ public class JdbcEx6_execute {
 					count++;
 				}
 				System.out.println();
-				
-			}count /= rsmd.getColumnCount();
+			}
 		}
 		else {//select구문 이외의 sql문장
 			System.out.println("변경된 레코드 건수 : "+ps.getUpdateCount());
-		}System.out.println("조회컬럼수 : "+count);
+		}
 	}
 	
 }

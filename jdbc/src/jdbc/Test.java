@@ -17,25 +17,36 @@ public class Test {
 		while(true) {
 			try {
 				int count=0;
-				Connection conn = DBConnection.getConnection();
+				Connection conn = DBConnection.getConnection();//JDBC연결(properties이용)
 				System.out.print("쿼리를 입력하세요 : ");
 				String sql = scan.nextLine();
 				if(sql.contains("exit")) {
 					System.out.println("종료");
 					return;
 				}
+				
 				PreparedStatement ps = conn.prepareStatement(sql);//sql을 DB에전달
+				
 
 				if(ps.execute()) {//select문이면 true
+					PreparedStatement countp = conn.prepareStatement("select count(*)  from("+sql+")b ");
+					ResultSet crs= countp.executeQuery();
+					while(crs.next()) {
+						System.out.println("조회된 레코드의 수 : "+crs.getInt(1));
+					}//레코드 갯수 구하는법1
+					
+					
 					ResultSetMetaData psmd = ps.getMetaData();
 					ResultSet rs = ps.getResultSet();
-
+					
+					/*
+					레코드의 갯수 구하는법2
 					rs.last();//rs를 마지막행으로 이동
 					int row = rs.getRow();//row(행)의 길이반환
 					System.out.println("조회된 레코드의 수 : "+row);
-					rs.beforeFirst();//첫번째 행 이전으로 돌아감
-					//첫번째행으로 돌아가면 rs.next()를 만나면 2번째행부터실행됨!!!!(주의)
-
+					rs.beforeFirst();//첫번째 행 이전으로 돌아감 
+					//첫번째행으로 돌아가면 rs.next()를 만나면 2번째행부터실행됨!!!!(주의)*/
+					
 					for (int i = 1; i <= psmd.getColumnCount(); i++) {
 						System.out.printf("%-10s",psmd.getColumnName(i));
 						//i번쨰로조회한 컬럼의 이름
@@ -47,7 +58,10 @@ public class Test {
 							System.out.printf("%-10s",rs.getString(i));//i번쨰컬럼의 레코드
 							count++;
 						}System.out.println();
-					}System.out.println("레코드 수 "+count/psmd.getColumnCount());
+					} 
+					/* 
+					레코드 갯수 구하는법3
+					System.out.println("레코드 수 "+count/psmd.getColumnCount()); */
 					//count를 컬럼1개당 ++를 해줬다
 					//레코드 수를 찾으려면 count를 컬럼의갯수(psmd.getColumnCount)로 나눠줘야함
 				}
@@ -59,6 +73,7 @@ public class Test {
 			}
 			catch(Exception e) {
 				System.out.println("잘못된 형식");
+				System.out.println(e.getMessage());
 				continue;
 			}
 		}

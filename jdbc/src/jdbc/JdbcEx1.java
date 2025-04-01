@@ -19,11 +19,11 @@ public class JdbcEx1 {
 		// mariadb : org.mariadb.jdbc.Driver
 		// oracle : oracle.jdbc.driver.OracleDriver
 		Class.forName("org.mariadb.jdbc.Driver");
-		//4.conn : db와 연결객체
+		//4.conn : db와 java연결객체
 		//localhost : IP주소 
 		//3306 : port번호 (maria , my sql : 3306) 
 		Connection conn = DriverManager.getConnection
-				("jdbc:mariadb://localhost:3306/gdjdb","gduser","1234");
+				("jdbc:mariadb://localhost:3306/dong","dong","1234");
 		                                      //나의DB명 , 사용자명 , 비번
 		System.out.println("jdbc 연결완료");
 		

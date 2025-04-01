@@ -16,7 +16,7 @@ public class JdbcEx4 {
 		System.out.println("loginTable create : "+result);//0
 		
 		//데이터추가1
-		sql = "insert into login(id,password) values (?,?)";
+		sql = "insert into login(id,password) values (?,?)"; //prepareStatemet만 이sql을 읽을 수 있음
 		ps = conn.prepareStatement(sql); //sql문장 db에전달
 		ps.setString(1, "hongkd");//1번쨰?의값
 		ps.setString(2, "1234");//2번쨰?의값
